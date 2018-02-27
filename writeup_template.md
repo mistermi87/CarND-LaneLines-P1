@@ -45,3 +45,30 @@ Another shortcoming could be ...
 A possible improvement would be to ...
 
 Another potential improvement could be to ...
+
+
+right_line_x=[]
+    right_line_y=[]
+    left_line_x=[]
+    left_line_y=[]
+    
+    for line in lines:
+        for x1,y1,x2,y2 in line:
+            with np.errstate(divide='ignore', invalid='ignore'):
+                slope=(x2-x1)/float(y2-y1)
+                center_of_line=(x1+x2)/2
+            #print(slope, center_of_line)
+            if (0.5 < slope < 2.5)and center_of_line>horizontal_center:
+                right_line_x.append(x1)
+                right_line_x.append(x2)
+                right_line_y.append(y1)
+                right_line_y.append(y2)
+                
+            elif (-0.5 > slope>-2.5) and center_of_line<horizontal_center:
+                left_line_x.append(x1)
+                left_line_x.append(x2)
+                left_line_y.append(y1)
+                left_line_y.append(y2)
+    
+    
+            cv2.line(img, (x1, y1), (x2, y2), color, thickness)
